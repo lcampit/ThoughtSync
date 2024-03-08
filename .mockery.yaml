@@ -1,0 +1,10 @@
+dir: mocks/{{ replaceAll .InterfaceDirRelative "internal" "internal_" }}
+mockname: "{{.InterfaceName}}"
+outpkg: "{{.PackageName}}"
+filename: "{{.InterfaceName}}.go"
+packages:
+  ThoughtSync/cmd/editor:
+    interfaces:
+      Editor:
+        config:
+          with-expecter: False
