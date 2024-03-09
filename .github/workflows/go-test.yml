@@ -1,0 +1,22 @@
+name: go-test
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: jdx/mise-action@v2
+        with:
+          version: 2024.3.1 # [default: latest] mise version to install
+          install: false # [default: true] run `mise install`
+          cache: true # [default: true] cache mise using GitHub's cache
+          # automatically write this .tool-versions file
+          experimental: true # [default: false] enable experimental features
+      - run: mise exec go@1.22 -- mise install
+      - run: mise run test

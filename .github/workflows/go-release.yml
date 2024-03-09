@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release-linux-amd64:
+    name: release linux/amd64
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+        with:
+          version: 2024.3.1 # [default: latest] mise version to install
+          install: false # [default: true] run `mise install`
+          cache: true # [default: true] cache mise using GitHub's cache
+          # automatically write this .tool-versions file
+          experimental: true # [default: false] enable experimental features
+      - run: mise exec go@1.22 -- mise install
+      - uses: wangyoucao577/go-release-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: linux
+          goarch: amd64
