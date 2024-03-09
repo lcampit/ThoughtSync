@@ -27,7 +27,7 @@ Some other tools used are:
 ## ✨ Features
 
 ThoughtSync lets the user open, edit and search
-through their own note collection.github go cli
+through their own note collection.
 Current features include:
 
 - Editing an existing note;
