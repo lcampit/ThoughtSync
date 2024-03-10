@@ -1,3 +1,16 @@
+
+<div align="center"><p>
+  <a href="https://github.com/Leo-Campo/ThoughtSync/releases/latest">
+     <img alt="Latest release" src="https://img.shields.io/github/v/release/Leo-Campo/ThoughtSync?style=for-the-badge&logo=starship&labelColor=302D41&include_prerelease&sort=semver" />  
+  </a>
+  <a href="https://github.com/Leo-Campo/ThoughtSync/pulse">
+    <img alt="Last commit" src="https://img.shields.io/github/last-commit/Leo-Campo/ThoughtSync?style=for-the-badge&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/>
+  </a>
+  <a href="https://github.com/Leo-Campo/ThoughtSync/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/github/license/Leo-Campo/ThoughtSync?style=for-the-badge&logo=starship&color=ee999f&logoColor=D9E0EE&labelColor=302D41" />
+  </a>
+</div>
+
 # Thought Sync
 
 ## :pencil: Introduction
@@ -53,6 +66,7 @@ ThoughtSync can be installed as any go product with `go install`:
 ```bash
 go install github.com/Leo-Campo/ThoughtSync
 ```
+or simply by downloading the executable from the releases page
 
 ### 🔥 Usage
 
@@ -66,6 +80,7 @@ be automatically read by the CLI.
 Once that is done, simply run:
 
 - `thoughtsync new <filename.txt>` to create a new note in your vault
+- `thoughtsync today` to create and/or open the journal note of today
 
 ### :running_man: Running the project
 
