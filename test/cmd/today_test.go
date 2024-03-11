@@ -12,7 +12,7 @@ type TodayNoteTestSuite struct {
 }
 
 func (suite *TodayNoteTestSuite) TestNewNoteCmd() {
-	err := cmd.OpenTodayNote(suite.editor, suite.vaultPath)
+	err := cmd.OpenTodayNote(suite.editor, suite.vaultPath, "2006-02-01")
 	suite.Assert().Nil(err)
 }
 
