@@ -32,7 +32,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(config.InitConfig)
 	// RootCmd.PersistentFlags().StringVar(&CfgFile, "config", "", "config file (default is $HOME/.config/thoughtsync/config.yaml)")
-	RootCmd.PersistentFlags().StringP("vault", "v", "test", "Your notes vault path")
+	RootCmd.PersistentFlags().StringP("vault", "v", config.DEFAULT_VAULT_PATH, "Your notes vault path")
 	viper.BindPFlag("vault.path", RootCmd.PersistentFlags().Lookup("vault"))
 
 	// Cobra also supports local flags, which will only run
