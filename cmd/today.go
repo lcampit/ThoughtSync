@@ -4,6 +4,7 @@ Copyright © 2024 Leonardo Campitelli leonardo932.campitelli@gmail.com
 package cmd
 
 import (
+	"ThoughtSync/cmd/config"
 	"ThoughtSync/cmd/date"
 	"ThoughtSync/cmd/editor"
 	"ThoughtSync/cmd/path"
@@ -12,6 +13,7 @@ import (
 	gopath "path"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 func OpenTodayNote(editor editor.Editor, vaultPath string) error {
@@ -35,18 +37,9 @@ func init() {
 		Use:   "today",
 		Short: "Quickly edit the journal note for today",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			vaultPath, _ := cmd.Flags().GetString("vault")
+			vaultPath := viper.GetString(config.VAULT_KEY)
 			return OpenTodayNote(editor, vaultPath)
 		},
 	}
 	RootCmd.AddCommand(todayCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// todayCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
 }
