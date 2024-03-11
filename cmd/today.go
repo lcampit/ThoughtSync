@@ -9,6 +9,7 @@ import (
 	"ThoughtSync/cmd/editor"
 	"ThoughtSync/cmd/path"
 	"fmt"
+	"time"
 
 	gopath "path"
 
@@ -16,14 +17,14 @@ import (
 	"github.com/spf13/viper"
 )
 
-func OpenTodayNote(editor editor.Editor, vaultPath string) error {
+func OpenTodayNote(editor editor.Editor, vaultPath, filename string) error {
 	journalPath := gopath.Join(vaultPath, "journal")
-	filename := fmt.Sprintf("%s.md", date.Today())
-	err := path.EnsurePresent(journalPath, filename)
+	filenameMd := fmt.Sprintf("%s.md", filename)
+	err := path.EnsurePresent(journalPath, filenameMd)
 	if err != nil {
 		return fmt.Errorf("failed to ensure present: %w", err)
 	}
-	filePath := gopath.Join(journalPath, filename)
+	filePath := gopath.Join(journalPath, filenameMd)
 	err = editor.Edit(filePath)
 	if err != nil {
 		return fmt.Errorf("error in editing file: %w", err)
@@ -38,7 +39,12 @@ func init() {
 		Short: "Quickly edit the journal note for today",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			vaultPath := viper.GetString(config.VAULT_KEY)
-			return OpenTodayNote(editor, vaultPath)
+			format := viper.GetString(config.JOURNAL_NOTE_FORMAT)
+			filename, err := date.Format(time.Now(), format)
+			if err != nil {
+				return fmt.Errorf("error getting journal filename: %w", err)
+			}
+			return OpenTodayNote(editor, vaultPath, filename)
 		},
 	}
 	RootCmd.AddCommand(todayCmd)

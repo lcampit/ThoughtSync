@@ -18,6 +18,10 @@ const (
 	// Vault path
 	VAULT_KEY          = "vault.path"
 	DEFAULT_VAULT_PATH = "thoughtsync-vault"
+
+	// Journal note format
+	JOURNAL_NOTE_FORMAT    = "journal.format"
+	DEFAULT_JOURNAL_FORMAT = "YYYY-MM-DD"
 )
 
 func InitConfig() {
@@ -27,6 +31,9 @@ func InitConfig() {
 	viper.SetConfigName(CONFIG_FILE)
 	viper.AddConfigPath(gopath.Join(configDir, CONFIG_DIR))
 	viper.AutomaticEnv()
+
+	viper.SetDefault(VAULT_KEY, DEFAULT_VAULT_PATH)
+	viper.SetDefault(JOURNAL_NOTE_FORMAT, DEFAULT_JOURNAL_FORMAT)
 
 	if err := viper.ReadInConfig(); err != nil {
 		os.Exit(1)
