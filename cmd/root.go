@@ -4,9 +4,11 @@ Copyright © 2024 Leonardo Campitelli leonardo932.campitelli@gmail.com
 package cmd
 
 import (
+	"ThoughtSync/cmd/config"
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // RootCmd represents the base command when called without any subcommands
@@ -16,10 +18,6 @@ var RootCmd = &cobra.Command{
 	Long: `ThoughtSync is a CLI tool that helps command line power users 
   in managing their notes. It allows to create and edit notes at 
   the speed of thought`,
-
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -32,12 +30,10 @@ func Execute() {
 }
 
 func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.ThoughtSync.yaml)")
-	RootCmd.PersistentFlags().StringP("vault", "v", os.Getenv("THOUGHT_SYNC_NOTE_VAULT"), "Your notes vault path")
+	cobra.OnInitialize(config.InitConfig)
+	// RootCmd.PersistentFlags().StringVar(&CfgFile, "config", "", "config file (default is $HOME/.config/thoughtsync/config.yaml)")
+	RootCmd.PersistentFlags().StringP("vault", "v", config.DEFAULT_VAULT_PATH, "Your notes vault path")
+	viper.BindPFlag("vault.path", RootCmd.PersistentFlags().Lookup("vault"))
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
