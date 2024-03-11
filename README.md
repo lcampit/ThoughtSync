@@ -56,8 +56,6 @@ Current features include:
 - [ ] Quickly group notes with a certain tag or containing a certain word
 - [ ] Quickly read a note content without opening it using `cat` or similar
 - [x] Preferences in a single configuration file
-  - [ ] Configure directories (folders) in your vault and dinamycally
-        create commands for them
 - [ ] Fuzzy find notes in your vault and open them
 
 ## :rocket: Installation
