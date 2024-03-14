@@ -26,6 +26,14 @@ const (
 	// Journal directory
 	JOURNAL_DIRECTORY_KEY     = "journal.directory"
 	DEFAULT_JOURNAL_DIRECTORY = "journal"
+
+	// Git syncing
+	GIT_SYNC_ENABLED_KEY       = "git.enabled"
+	DEFAULT_GIT_SYNC_ENABLED   = false
+	GIT_COMMIT_MESSAGE_KEY     = "git.commit-message"
+	DEFAULT_GIT_COMMIT_MESSAGE = "thoughtsync: Synced with git"
+	GIT_REMOTE_ENABLED_KEY     = "git.remote"
+	DEFAULT_GIT_REMOTE_ENABLED = false
 )
 
 func InitConfig() {
@@ -39,6 +47,9 @@ func InitConfig() {
 	viper.SetDefault(VAULT_KEY, DEFAULT_VAULT_PATH)
 	viper.SetDefault(JOURNAL_NOTE_FORMAT_KEY, DEFAULT_JOURNAL_FORMAT)
 	viper.SetDefault(JOURNAL_DIRECTORY_KEY, DEFAULT_JOURNAL_DIRECTORY)
+	viper.SetDefault(GIT_SYNC_ENABLED_KEY, DEFAULT_GIT_SYNC_ENABLED)
+	viper.SetDefault(GIT_COMMIT_MESSAGE_KEY, DEFAULT_GIT_COMMIT_MESSAGE)
+	viper.SetDefault(GIT_REMOTE_ENABLED_KEY, DEFAULT_GIT_REMOTE_ENABLED)
 
 	if err := viper.ReadInConfig(); err != nil {
 		os.Exit(1)
