@@ -12,7 +12,7 @@ type NewNoteTestSuite struct {
 }
 
 func (suite *NewNoteTestSuite) TestNewNoteCmd() {
-	err := cmd.NewNote(suite.editor, suite.vaultPath, "", "test.txt")
+	err := cmd.NewNote(suite.editor, suite.vaultPath, "", "test", ".txt")
 	suite.Assert().Nil(err)
 }
 
