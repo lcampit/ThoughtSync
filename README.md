@@ -84,6 +84,7 @@ The configuration file is defined as follows:
 
 - The `vault` section contains all configuration related to the note vault
   - `path` contains the full path to the vault main directory
+  - `extension` contains the extension of the notes files in your vault (with dot)
 - The `journal` section contains all configuration related to the journal notes:
   - `directory` contains the path, relative to `vault.path`,
     where to store your journal notes
@@ -97,6 +98,7 @@ Here's an exhaustive configuration example:
 # Contains all vault specific options
 vault:
   path: $HOME/vault # Default: $HOME/thoughtsync
+  extension: ".txt" # Default: ".md"
 
 journal:
   directory: my-own-journal # Default: journal
