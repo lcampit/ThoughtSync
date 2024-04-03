@@ -33,8 +33,9 @@ func SyncWithGit(vaultPath, commitMessage string, pushToRemote bool) error {
 		cmd = exec.Command("git", "push")
 		cmd.Dir = vaultPath
 		_, err = cmd.Output()
+		return err
 	}
-	return err
+	return nil
 }
 
 func init() {
@@ -42,7 +43,7 @@ func init() {
 		Use:   "sync",
 		Short: "Stage, commit and push all changes in your note vault to your remote repository",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			gitSyncEnabled := viper.GetBool("git.enabled")
+			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
 			if !gitSyncEnabled {
 				return fmt.Errorf("git sync is not enabled in your config file")
 			}
@@ -52,5 +53,7 @@ func init() {
 			return SyncWithGit(vaultPath, commitMessage, pushToRemote)
 		},
 	}
+	syncCmd.Flags().BoolP("push", "p", viper.GetBool(config.GIT_REMOTE_ENABLED_KEY), "Folder of the note vault to put the new note in")
+	viper.BindPFlag(config.GIT_REMOTE_ENABLED_KEY, syncCmd.Flags().Lookup("push"))
 	RootCmd.AddCommand(syncCmd)
 }

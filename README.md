@@ -56,6 +56,7 @@ Current features include:
 - [ ] Quickly group notes with a certain tag or containing a certain word
 - [ ] Quickly read a note content without opening it using `cat` or similar
 - [x] Preferences in a single configuration file
+- [x] Git syncing with remote options
 - [ ] Fuzzy find notes in your vault and open them
 
 ## :rocket: Installation
@@ -74,6 +75,8 @@ The following is a list of available commands:
 
 - `thoughtsync new <filename.txt>` to create a new note in your vault
 - `thoughtsync today` to create and/or open the journal note of today
+- `thoughtysync sync` to stage, commit and optionally push your vault to
+  your remote git repository
 
 ### ⚙️ Configuration
 
@@ -90,6 +93,13 @@ The configuration file is defined as follows:
   - `format` defines the format used to give a name to your journal
     notes, such as "2006-02-01", without extension
     - currently supported formats are `YYYY-MM-DD`, `MM-DD-YYYY`
+- The `git` section contains all options related to managing your
+  notes with git:
+  - `enable` enables git support
+  - `remote` enable git remote support and
+    pushing to the remote with `thoughtsync sync`
+    (has no effect if `git.enable` is false)
+  - `commit-message` contains the commit message used with `thoughtsync sync`
 
 Here's an exhaustive configuration example:
 
@@ -98,9 +108,16 @@ Here's an exhaustive configuration example:
 vault:
   path: $HOME/vault # Default: $HOME/thoughtsync
 
+# Contains all journal specific options
 journal:
   directory: my-own-journal # Default: journal
   format: "YYYY-MM-DD" # Default: "YYYY-MM-DD"
+
+# Contains all git specific options
+git:
+  enable: true # default false
+  remote: true # default false
+  commit-message: "thoughtsync sync" # default "thoughtsync: Synced with git"
 ```
 
 ### :running_man: Running the project

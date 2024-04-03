@@ -28,7 +28,7 @@ const (
 	DEFAULT_JOURNAL_DIRECTORY = "journal"
 
 	// Git syncing
-	GIT_SYNC_ENABLED_KEY       = "git.enabled"
+	GIT_SYNC_ENABLED_KEY       = "git.enable"
 	DEFAULT_GIT_SYNC_ENABLED   = false
 	GIT_COMMIT_MESSAGE_KEY     = "git.commit-message"
 	DEFAULT_GIT_COMMIT_MESSAGE = "thoughtsync: Synced with git"
