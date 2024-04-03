@@ -21,12 +21,16 @@ using their own `EDITOR`.
 It was born to be used with an [Obsidian](https://obsidian.md/)-type
 vault in mind, but it is compatible with just
 any note collection contained in a
-single vault-like folder.
+single folder. This collection is commonly referred to
+as a _vault_.
 
 ## :computer: Tech Stack
 
 ThoughtSync is built in go using the
-[cobra](https://github.com/spf13/cobra) library.
+[cobra](https://github.com/spf13/cobra) framework and a
+handful of other go libraries like
+[go-editor](https://github.com/confluentinc/go-editor),
+[go-git](https://github.com/go-git/go-git)
 Some other tools used are:
 
 - [mise-en-place](https://mise.jdx.dev/), a polyglot runtime manager to handle
@@ -48,6 +52,8 @@ Current features include:
 - Create or open the note entry for the current day (for those that keep
   a daily journal)
 - Configure note vault path, journal directory, note format and much more
+- Keep track of your vault changes using git and optionally sync it
+  with a remote repository
 
 ### ⚙️ Roadmap
 
@@ -58,6 +64,8 @@ Current features include:
 - [x] Preferences in a single configuration file
 - [x] Git syncing with remote options
 - [ ] Fuzzy find notes in your vault and open them
+- [ ] See the vault git status
+- [ ] Open a tree view of your vault for easy navigation
 
 ## :rocket: Installation
 
@@ -68,6 +76,8 @@ go install github.com/Leo-Campo/ThoughtSync
 ```
 
 or simply by downloading the executable from the releases page
+
+It's suggested to use an alias such as `alias ts=ThoughtSync`
 
 ### 🔥 Usage
 
