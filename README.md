@@ -87,7 +87,7 @@ The configuration file is defined as follows:
   - `extension` contains the extension of the notes files in your vault (with dot)
 - The `journal` section contains all configuration related to the journal notes:
   - `directory` contains the path, relative to `vault.path`,
-    where to store your journal notes
+    to store your journal notes in
   - `format` defines the format used to give a name to your journal
     notes, such as "2006-02-01", without extension
     - currently supported formats are `YYYY-MM-DD`, `MM-DD-YYYY`
