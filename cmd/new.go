@@ -10,6 +10,7 @@ import (
 	"fmt"
 
 	gopath "path"
+	filepath "path/filepath"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -17,13 +18,17 @@ import (
 
 // NewNote opens the given file filename in vaultType, optionally in directory
 // noteType, using the editor provided
-func NewNote(editor editor.Editor, vaultPath, noteType, filename string) error {
+func NewNote(editor editor.Editor, vaultPath, noteType, filename, fileExtension string) error {
 	folderPath := gopath.Join(vaultPath, noteType)
-	err := path.EnsurePresent(folderPath, filename)
+	completeFilename := filename
+	if filepath.Ext(filename) != fileExtension {
+		completeFilename += fileExtension
+	}
+	err := path.EnsurePresent(folderPath, completeFilename)
 	if err != nil {
 		return fmt.Errorf("error in ensure present for dir %s, file %s: %v", folderPath, filename, err)
 	}
-	fullPath := gopath.Join(folderPath, filename)
+	fullPath := gopath.Join(folderPath, completeFilename)
 	err = editor.Edit(fullPath)
 	if err != nil {
 		return fmt.Errorf("error in write: %v", err)
@@ -40,11 +45,12 @@ func init() {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			filename := args[0]
 			vaultPath := viper.GetString(config.VAULT_KEY)
-			noteType, _ := cmd.Flags().GetString("type")
-			return NewNote(editor, vaultPath, noteType, filename)
+			noteType, _ := cmd.Flags().GetString("dir")
+			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
+			return NewNote(editor, vaultPath, noteType, filename, fileExtension)
 		},
 	}
-	newCmd.Flags().StringP("type", "t", "", "Folder of the note vault to put the new note in")
+	newCmd.Flags().StringP("dir", "d", "", "Vault directory to put the new note in")
 
 	RootCmd.AddCommand(newCmd)
 }
