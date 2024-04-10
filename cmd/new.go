@@ -20,14 +20,15 @@ import (
 // noteType, using the editor provided
 func NewNote(editor editor.Editor, vaultPath, noteType, filename, fileExtension string) error {
 	folderPath := gopath.Join(vaultPath, noteType)
-	err := path.EnsurePresent(folderPath, filename)
+	completeFilename := filename
+	if filepath.Ext(filename) != fileExtension {
+		completeFilename += fileExtension
+	}
+	err := path.EnsurePresent(folderPath, completeFilename)
 	if err != nil {
 		return fmt.Errorf("error in ensure present for dir %s, file %s: %v", folderPath, filename, err)
 	}
-	fullPath := gopath.Join(folderPath, filename)
-	if filepath.Ext(fullPath) != fileExtension {
-		fullPath += fileExtension
-	}
+	fullPath := gopath.Join(folderPath, completeFilename)
 	err = editor.Edit(fullPath)
 	if err != nil {
 		return fmt.Errorf("error in write: %v", err)
@@ -46,6 +47,7 @@ func init() {
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			noteType, _ := cmd.Flags().GetString("type")
 			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
+			fmt.Printf("extension: %s\n", fileExtension)
 			return NewNote(editor, vaultPath, noteType, filename, fileExtension)
 		},
 	}
