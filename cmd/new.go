@@ -47,7 +47,6 @@ func init() {
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			noteType, _ := cmd.Flags().GetString("type")
 			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
-			fmt.Printf("extension: %s\n", fileExtension)
 			return NewNote(editor, vaultPath, noteType, filename, fileExtension)
 		},
 	}
