@@ -16,8 +16,10 @@ const (
 
 	// Keys in the config file with default values
 	// Vault path
-	VAULT_KEY          = "vault.path"
-	DEFAULT_VAULT_PATH = "$HOME/thoughtsync-vault"
+	VAULT_KEY                     = "vault.path"
+	DEFAULT_VAULT_PATH            = "$HOME/thoughtsync-vault"
+	VAULT_NOTES_EXTENSION_KEY     = "vault.extension"
+	DEFAULT_VAULT_NOTES_EXTENSION = ".md"
 
 	// Journal note format
 	JOURNAL_NOTE_FORMAT_KEY = "journal.format"
@@ -39,6 +41,7 @@ func InitConfig() {
 	viper.SetDefault(VAULT_KEY, DEFAULT_VAULT_PATH)
 	viper.SetDefault(JOURNAL_NOTE_FORMAT_KEY, DEFAULT_JOURNAL_FORMAT)
 	viper.SetDefault(JOURNAL_DIRECTORY_KEY, DEFAULT_JOURNAL_DIRECTORY)
+	viper.SetDefault(VAULT_NOTES_EXTENSION_KEY, DEFAULT_VAULT_NOTES_EXTENSION)
 
 	if err := viper.ReadInConfig(); err != nil {
 		os.Exit(1)
