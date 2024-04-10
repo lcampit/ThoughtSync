@@ -4,13 +4,13 @@ Copyright © 2024 Leonardo Campitelli leonardo932.campitelli@gmail.com
 package cmd
 
 import (
-	"ThoughtSync/cmd/config"
-	"ThoughtSync/cmd/editor"
-	"ThoughtSync/cmd/path"
 	"fmt"
 
 	gopath "path"
 
+	"github.com/lcampit/ThoughtSync/cmd/config"
+	"github.com/lcampit/ThoughtSync/cmd/editor"
+	"github.com/lcampit/ThoughtSync/cmd/path"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

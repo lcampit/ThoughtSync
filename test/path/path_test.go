@@ -1,13 +1,12 @@
 package path
 
 import (
-	"ThoughtSync/cmd/path"
 	"fmt"
 	"os"
+	gopath "path"
 	"testing"
 
-	gopath "path"
-
+	"github.com/lcampit/ThoughtSync/cmd/path"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )

@@ -4,9 +4,9 @@ Copyright © 2024 Leonardo Campitelli leonardo932.campitelli@gmail.com
 package cmd
 
 import (
-	"ThoughtSync/cmd/config"
 	"os"
 
+	"github.com/lcampit/ThoughtSync/cmd/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

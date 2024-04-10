@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"ThoughtSync/cmd"
 	"testing"
 
+	"github.com/lcampit/ThoughtSync/cmd"
 	"github.com/stretchr/testify/suite"
 )
 

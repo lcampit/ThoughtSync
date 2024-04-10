@@ -1,10 +1,10 @@
 package date
 
 import (
-	"ThoughtSync/cmd/date"
 	"testing"
 	"time"
 
+	"github.com/lcampit/ThoughtSync/cmd/date"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
