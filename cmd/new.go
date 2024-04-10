@@ -45,12 +45,12 @@ func init() {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			filename := args[0]
 			vaultPath := viper.GetString(config.VAULT_KEY)
-			noteType, _ := cmd.Flags().GetString("type")
+			noteType, _ := cmd.Flags().GetString("dir")
 			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
 			return NewNote(editor, vaultPath, noteType, filename, fileExtension)
 		},
 	}
-	newCmd.Flags().StringP("type", "t", "", "Folder of the note vault to put the new note in")
+	newCmd.Flags().StringP("dir", "d", "", "Vault directory to put the new note in")
 
 	RootCmd.AddCommand(newCmd)
 }
