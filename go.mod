@@ -1,4 +1,4 @@
-module ThoughtSync
+module github.com/lcampit/ThoughtSync
 
 go 1.22.0
 

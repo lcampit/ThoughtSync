@@ -16,8 +16,10 @@ const (
 
 	// Keys in the config file with default values
 	// Vault path
-	VAULT_KEY          = "vault.path"
-	DEFAULT_VAULT_PATH = "$HOME/thoughtsync-vault"
+	VAULT_KEY                     = "vault.path"
+	DEFAULT_VAULT_PATH            = "$HOME/thoughtsync-vault"
+	VAULT_NOTES_EXTENSION_KEY     = "vault.extension"
+	DEFAULT_VAULT_NOTES_EXTENSION = ".md"
 
 	// Journal note format
 	JOURNAL_NOTE_FORMAT_KEY = "journal.format"
@@ -58,6 +60,7 @@ func InitConfig() {
 	viper.SetDefault(GIT_REMOTE_ENABLED_KEY, DEFAULT_GIT_REMOTE_ENABLED)
 	viper.SetDefault(GIT_AUTH_SSH_KEY, DEFAULT_GIT_AUTH_SSH)
 	viper.SetDefault(GIT_REMOTE_NAME_KEY, DEFAULT_GIT_REMOTE_NAME)
+	viper.SetDefault(VAULT_NOTES_EXTENSION_KEY, DEFAULT_VAULT_NOTES_EXTENSION)
 
 	if err := viper.ReadInConfig(); err != nil {
 		os.Exit(1)

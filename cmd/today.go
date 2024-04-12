@@ -4,23 +4,22 @@ Copyright © 2024 Leonardo Campitelli leonardo932.campitelli@gmail.com
 package cmd
 
 import (
-	"ThoughtSync/cmd/config"
-	"ThoughtSync/cmd/date"
-	"ThoughtSync/cmd/editor"
-	"ThoughtSync/cmd/path"
 	"fmt"
+	gopath "path"
 	"time"
 
-	gopath "path"
-
+	"github.com/lcampit/ThoughtSync/cmd/config"
+	"github.com/lcampit/ThoughtSync/cmd/date"
+	"github.com/lcampit/ThoughtSync/cmd/editor"
+	"github.com/lcampit/ThoughtSync/cmd/path"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 // OpenTodayNote opens the today note with name filename in the vault directory
 // vaultJournalPath using the editor provider
-func OpenTodayNote(editor editor.Editor, vaultJournalPath, filename string) error {
-	filenameMd := fmt.Sprintf("%s.md", filename)
+func OpenTodayNote(editor editor.Editor, vaultJournalPath, filename, extension string) error {
+	filenameMd := filename + extension
 	err := path.EnsurePresent(vaultJournalPath, filenameMd)
 	if err != nil {
 		return fmt.Errorf("failed to ensure present: %w", err)
@@ -44,10 +43,11 @@ func init() {
 			journalDir := viper.GetString(config.JOURNAL_DIRECTORY_KEY)
 			vaultJournalPath := gopath.Join(vaultPath, journalDir)
 			filename, err := date.Format(time.Now(), format)
+			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
 			if err != nil {
 				return fmt.Errorf("error getting journal filename: %w", err)
 			}
-			return OpenTodayNote(editor, vaultJournalPath, filename)
+			return OpenTodayNote(editor, vaultJournalPath, filename, fileExtension)
 		},
 	}
 	RootCmd.AddCommand(todayCmd)

@@ -1,12 +1,12 @@
 <div align="center"><p>
   <a href="https://github.com/Leo-Campo/ThoughtSync/releases/latest">
-     <img alt="Latest release" src="https://img.shields.io/github/v/release/Leo-Campo/ThoughtSync?style=for-the-badge&logo=starship&labelColor=302D41&include_prerelease&sort=semver" />  
+     <img alt="Latest release" src="https://img.shields.io/github/v/release/lcampit/ThoughtSync?style=for-the-badge&logo=starship&labelColor=302D41&include_prerelease&sort=semver" />  
   </a>
   <a href="https://github.com/Leo-Campo/ThoughtSync/pulse">
-    <img alt="Last commit" src="https://img.shields.io/github/last-commit/Leo-Campo/ThoughtSync?style=for-the-badge&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/>
+    <img alt="Last commit" src="https://img.shields.io/github/last-commit/lcampit/ThoughtSync?style=for-the-badge&logo=starship&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/>
   </a>
   <a href="https://github.com/Leo-Campo/ThoughtSync/blob/main/LICENSE">
-    <img alt="License" src="https://img.shields.io/github/license/Leo-Campo/ThoughtSync?style=for-the-badge&logo=starship&color=ee999f&logoColor=D9E0EE&labelColor=302D41" />
+    <img alt="License" src="https://img.shields.io/github/license/lcampit/ThoughtSync?style=for-the-badge&logo=starship&color=ee999f&logoColor=D9E0EE&labelColor=302D41" />
   </a>
 </div>
 
@@ -105,9 +105,10 @@ The configuration file is defined as follows:
 
 - The `vault` section contains all configuration related to the note vault
   - `path` contains the full path to the vault main directory
+  - `extension` contains the extension of the notes files in your vault (with dot)
 - The `journal` section contains all configuration related to the journal notes:
   - `directory` contains the path, relative to `vault.path`,
-    where to store your journal notes
+    to store your journal notes in
   - `format` defines the format used to give a name to your journal
     notes, such as "2006-02-01", without extension
     - currently supported formats are `YYYY-MM-DD`, `MM-DD-YYYY`
@@ -127,6 +128,7 @@ Here's an exhaustive configuration example:
 # Contains all vault specific options
 vault:
   path: $HOME/vault # Default: $HOME/thoughtsync
+  extension: ".txt" # Default: ".md"
 
 # Contains all journal specific options
 journal:
