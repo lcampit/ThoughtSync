@@ -1,10 +1,11 @@
 package cmd
 
 import (
-	"ThoughtSync/cmd"
-	"ThoughtSync/mocks/cmd/repository"
 	"errors"
 	"testing"
+
+	"github.com/lcampit/ThoughtSync/cmd"
+	"github.com/lcampit/ThoughtSync/mocks/cmd/repository"
 
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
