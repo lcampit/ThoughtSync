@@ -5,77 +5,44 @@ package cmd
 
 import (
 	"ThoughtSync/cmd/config"
+	"ThoughtSync/cmd/repository"
 	"fmt"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/plumbing/transport/ssh"
 )
 
 // SyncWithGit adds all files to staging, commits with a given
 // message and pushes to remote if the pushToRemote flag is true
-func SyncWithGit(vaultPath, commitMessage, remoteName string, remoteEnabled, skipPush, useSSHAuth bool) error {
-	repo, err := git.PlainOpen(vaultPath)
+func SyncWithGit(repository repository.Repository, commitMessage string, remoteEnabled, skipPush bool) error {
+	err := repository.Pull()
 	if err != nil {
 		return err
 	}
 
-	pullOptions := &git.PullOptions{
-		RemoteName: remoteName,
-	}
-
-	commitOptions := &git.CommitOptions{
-		All: true,
-	}
-
-	if useSSHAuth {
-		authMethod, err := ssh.DefaultAuthBuilder("git")
-		if err != nil {
-			return err
-		}
-
-		pullOptions.Auth = authMethod
-	}
-
-	worktree, err := repo.Worktree()
+	isClean, err := repository.IsClean()
 	if err != nil {
 		return err
 	}
-
-	err = worktree.Pull(pullOptions)
-	if err != nil && err != git.NoErrAlreadyUpToDate {
-		return err
-	}
-
-	status, err := worktree.Status()
-	if err != nil {
-		return err
-	}
-
-	if status.IsClean() {
+	if isClean {
 		fmt.Println("vault worktree clean, nothing to sync")
 		return nil
 	}
 
-	_, err = worktree.Add(".")
+	err = repository.AddAllAndCommit(commitMessage)
 	if err != nil {
 		return err
 	}
-
-	_, err = worktree.Commit(viper.GetString(config.GIT_COMMIT_MESSAGE_KEY), commitOptions)
-	if err != nil {
-		return err
-	}
-
 	if !remoteEnabled {
-		fmt.Printf("remote option is not enabled")
+		fmt.Println("remote option is not enabled, skipping push")
 		return nil
 	}
 
 	if !skipPush {
-		err = repo.Push(&git.PushOptions{})
+		err = repository.Push()
 		return err
+	} else {
+		fmt.Println("skipping push")
 	}
 
 	return nil
@@ -83,18 +50,8 @@ func SyncWithGit(vaultPath, commitMessage, remoteName string, remoteEnabled, ski
 
 // VaultGitStatus prints to stdout the status
 // of the vault git repo, i.e. its current working tree
-func VaultGitStatus(vaultPath string) error {
-	repo, err := git.PlainOpen(vaultPath)
-	if err != nil {
-		return err
-	}
-
-	worktree, err := repo.Worktree()
-	if err != nil {
-		return err
-	}
-
-	status, err := worktree.Status()
+func VaultGitStatus(repository repository.Repository) error {
+	status, err := repository.GetStatusAsString()
 	if err != nil {
 		return err
 	}
@@ -103,26 +60,8 @@ func VaultGitStatus(vaultPath string) error {
 }
 
 // VaultGitPush pushses changes to the vault remote git repo
-func VaultGitPush(vaultPath, remoteName string, useSSHAuth bool) error {
-	repo, err := git.PlainOpen(vaultPath)
-	if err != nil {
-		return err
-	}
-
-	pushOptions := &git.PushOptions{
-		RemoteName: remoteName,
-	}
-
-	if useSSHAuth {
-		authMethod, err := ssh.DefaultAuthBuilder("git")
-		if err != nil {
-			return err
-		}
-
-		pushOptions.Auth = authMethod
-	}
-
-	err = repo.Push(pushOptions)
+func VaultGitPush(repository repository.Repository) error {
+	err := repository.Push()
 	return err
 }
 
@@ -145,7 +84,12 @@ func init() {
 			skipPush, _ := cmd.Flags().GetBool("no-push")
 			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
 			remoteName := viper.GetString(config.GIT_REMOTE_NAME_KEY)
-			return SyncWithGit(vaultPath, commitMessage, remoteName, remoteEnabled, skipPush, useSSHAuth)
+
+			repository, err := repository.OpenRepository(vaultPath, remoteName, useSSHAuth)
+			if err != nil {
+				return err
+			}
+			return SyncWithGit(repository, commitMessage, remoteEnabled, skipPush)
 		},
 	}
 
@@ -158,7 +102,11 @@ func init() {
 				return fmt.Errorf("git sync is not enabled in your config file")
 			}
 			vaultPath := viper.GetString(config.VAULT_KEY)
-			return VaultGitStatus(vaultPath)
+			repository, err := repository.OpenRepository(vaultPath, "", false)
+			if err != nil {
+				return err
+			}
+			return VaultGitStatus(repository)
 		},
 	}
 	syncCmd.Flags().Bool("no-push", viper.GetBool(config.GIT_REMOTE_ENABLED_KEY), "do not perform push after git commit")
@@ -174,7 +122,12 @@ func init() {
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
 			remoteName := viper.GetString(config.GIT_REMOTE_NAME_KEY)
-			return VaultGitPush(vaultPath, remoteName, useSSHAuth)
+
+			repository, err := repository.OpenRepository(vaultPath, remoteName, useSSHAuth)
+			if err != nil {
+				return err
+			}
+			return VaultGitPush(repository)
 		},
 	}
 	gitCmd.AddCommand(syncCmd, statusCmd, pushCmd)
