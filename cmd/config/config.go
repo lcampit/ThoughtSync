@@ -34,6 +34,8 @@ const (
 	DEFAULT_GIT_COMMIT_MESSAGE = "thoughtsync: Synced with git"
 	GIT_REMOTE_ENABLED_KEY     = "git.remote"
 	DEFAULT_GIT_REMOTE_ENABLED = false
+	GIT_AUTH_SSH_KEY           = "git.ssh"
+	DEFAULT_GIT_AUTH_SSH       = false
 )
 
 func InitConfig() {
@@ -50,6 +52,7 @@ func InitConfig() {
 	viper.SetDefault(GIT_SYNC_ENABLED_KEY, DEFAULT_GIT_SYNC_ENABLED)
 	viper.SetDefault(GIT_COMMIT_MESSAGE_KEY, DEFAULT_GIT_COMMIT_MESSAGE)
 	viper.SetDefault(GIT_REMOTE_ENABLED_KEY, DEFAULT_GIT_REMOTE_ENABLED)
+	viper.SetDefault(GIT_AUTH_SSH_KEY, DEFAULT_GIT_AUTH_SSH)
 
 	if err := viper.ReadInConfig(); err != nil {
 		os.Exit(1)

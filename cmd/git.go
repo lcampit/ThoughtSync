@@ -10,14 +10,32 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"gopkg.in/src-d/go-git.v4"
+	"gopkg.in/src-d/go-git.v4/plumbing/transport/ssh"
 )
 
 // SyncWithGit adds all files to staging, commits with a given
 // message and pushes to remote if the pushToRemote flag is true
-func SyncWithGit(vaultPath, commitMessage string, remoteEnabled, skipPush bool) error {
+func SyncWithGit(vaultPath, commitMessage string, remoteEnabled, skipPush, useSSHAuth bool) error {
 	repo, err := git.PlainOpen(vaultPath)
 	if err != nil {
 		return err
+	}
+
+	pullOptions := &git.PullOptions{
+		RemoteName: "origin",
+	}
+
+	commitOptions := &git.CommitOptions{
+		All: true,
+	}
+
+	if useSSHAuth {
+		authMethod, err := ssh.DefaultAuthBuilder("git")
+		if err != nil {
+			return err
+		}
+
+		pullOptions.Auth = authMethod
 	}
 
 	worktree, err := repo.Worktree()
@@ -25,17 +43,18 @@ func SyncWithGit(vaultPath, commitMessage string, remoteEnabled, skipPush bool) 
 		return err
 	}
 
-	err = worktree.Pull(&git.PullOptions{RemoteName: "origin"})
+	err = worktree.Pull(pullOptions)
 	if err != nil && err != git.NoErrAlreadyUpToDate {
 		return err
 	}
+
 	status, err := worktree.Status()
 	if err != nil {
 		return err
 	}
 
 	if status.IsClean() {
-		fmt.Printf("vault worktree clean, nothing to sync")
+		fmt.Println("vault worktree clean, nothing to sync")
 		return nil
 	}
 
@@ -44,7 +63,7 @@ func SyncWithGit(vaultPath, commitMessage string, remoteEnabled, skipPush bool) 
 		return err
 	}
 
-	_, err = worktree.Commit(viper.GetString(config.GIT_COMMIT_MESSAGE_KEY), &git.CommitOptions{All: true})
+	_, err = worktree.Commit(viper.GetString(config.GIT_COMMIT_MESSAGE_KEY), commitOptions)
 	if err != nil {
 		return err
 	}
@@ -98,7 +117,8 @@ func init() {
 			commitMessage := viper.GetString(config.GIT_COMMIT_MESSAGE_KEY)
 			remoteEnabled := viper.GetBool(config.GIT_REMOTE_ENABLED_KEY)
 			skipPush, _ := cmd.Flags().GetBool("no-push")
-			return SyncWithGit(vaultPath, commitMessage, remoteEnabled, skipPush)
+			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
+			return SyncWithGit(vaultPath, commitMessage, remoteEnabled, skipPush, useSSHAuth)
 		},
 	}
 

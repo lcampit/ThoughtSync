@@ -29,8 +29,8 @@ as a _vault_.
 ThoughtSync is built in go using the
 [cobra](https://github.com/spf13/cobra) framework and a
 handful of other go libraries like
-[go-editor](https://github.com/confluentinc/go-editor),
-[go-git](https://github.com/go-git/go-git)
+[go-editor](https://github.com/confluentinc/go-editor) and
+[go-git](https://github.com/go-git/go-git).
 Some other tools used are:
 
 - [mise-en-place](https://mise.jdx.dev/), a polyglot runtime manager to handle
@@ -64,7 +64,7 @@ Current features include:
 - [x] Preferences in a single configuration file
 - [x] Git syncing with remote options
 - [ ] Fuzzy find notes in your vault and open them
-- [ ] See the vault git status
+- [x] See the vault git status
 - [ ] Open a tree view of your vault for easy navigation
 
 ## :rocket: Installation
@@ -85,8 +85,10 @@ The following is a list of available commands:
 
 - `thoughtsync new <filename.txt>` to create a new note in your vault
 - `thoughtsync today` to create and/or open the journal note of today
-- `thoughtysync sync` to stage, commit and optionally push your vault to
-  your remote git repository
+- `thoughtysync git` contains all git-related commands:
+  - `sync` to stage, commit and optionally push your vault to
+    your remote git repository.
+  - `status` to see the current vault git status
 
 ### ⚙️ Configuration
 
@@ -110,6 +112,7 @@ The configuration file is defined as follows:
     pushing to the remote with `thoughtsync sync`
     (has no effect if `git.enable` is false)
   - `commit-message` contains the commit message used with `thoughtsync sync`
+  - `ssh` to enable ssh authentication for your vault
 
 Here's an exhaustive configuration example:
 
@@ -128,6 +131,7 @@ git:
   enable: true # default false
   remote: true # default false
   commit-message: "thoughtsync sync" # default "thoughtsync: Synced with git"
+  ssh: true # default false
 ```
 
 ### :running_man: Running the project
