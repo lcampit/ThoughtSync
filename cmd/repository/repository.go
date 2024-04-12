@@ -19,6 +19,8 @@ type repository struct {
 	useSSH     bool
 }
 
+// OpenRepository opens an existing
+// git reposotory with the given options
 func OpenRepository(path, remoteName string, useSSH bool) (Repository, error) {
 	repo, err := git.PlainOpen(path)
 	if err != nil {
@@ -27,6 +29,8 @@ func OpenRepository(path, remoteName string, useSSH bool) (Repository, error) {
 	return &repository{repo: repo, remoteName: remoteName, useSSH: useSSH}, nil
 }
 
+// IsClean returns true if the repository
+// work tree is clean, false otherwise
 func (r *repository) IsClean() (bool, error) {
 	worktree, err := r.repo.Worktree()
 	if err != nil {
@@ -41,6 +45,8 @@ func (r *repository) IsClean() (bool, error) {
 	return status.IsClean(), nil
 }
 
+// Pull pulls changes from the remote
+// into the local git repository
 func (r *repository) Pull() error {
 	worktree, err := r.repo.Worktree()
 	if err != nil {
@@ -86,6 +92,8 @@ func (r *repository) AddAllAndCommit(commitMessage string) error {
 	return nil
 }
 
+// Push pushes local changes into the
+// remote git repository
 func (r *repository) Push() error {
 	pushOptions := &git.PushOptions{
 		RemoteName: r.remoteName,
@@ -103,6 +111,9 @@ func (r *repository) Push() error {
 	return err
 }
 
+// GetStatusAsString returns the work tree status
+// as a string, one per file, stating their changes
+// returns an empty string on clean work tree
 func (r *repository) GetStatusAsString() (string, error) {
 	worktree, err := r.repo.Worktree()
 	if err != nil {

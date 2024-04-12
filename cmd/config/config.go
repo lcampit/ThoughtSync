@@ -40,6 +40,8 @@ const (
 	DEFAULT_GIT_REMOTE_NAME    = "origin"
 )
 
+// InitConfig Loads in ThoughtSync config
+// and sets up default values
 func InitConfig() {
 	configDir, err := os.UserConfigDir()
 	cobra.CheckErr(err)
