@@ -65,6 +65,13 @@ func VaultGitPush(repository repository.Repository) error {
 	return err
 }
 
+// VaultGitPull pulls changes from the vault remote
+// into the local repository
+func VaultGitPull(repository repository.Repository) error {
+	err := repository.Pull()
+	return err
+}
+
 func init() {
 	gitCmd := &cobra.Command{
 		Use:   "git",
@@ -130,6 +137,27 @@ func init() {
 			return VaultGitPush(repository)
 		},
 	}
-	gitCmd.AddCommand(syncCmd, statusCmd, pushCmd)
+
+	pullCmd := &cobra.Command{
+		Use:   "pull",
+		Short: "Pull changes from the vault remote git repo",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
+			if !gitSyncEnabled {
+				return fmt.Errorf("git sync is not enabled in your config file")
+			}
+			vaultPath := viper.GetString(config.VAULT_KEY)
+			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
+			remoteName := viper.GetString(config.GIT_REMOTE_NAME_KEY)
+
+			repository, err := repository.OpenRepository(vaultPath, remoteName, useSSHAuth)
+			if err != nil {
+				return err
+			}
+			return VaultGitPush(repository)
+		},
+	}
+
+	gitCmd.AddCommand(syncCmd, statusCmd, pushCmd, pullCmd)
 	RootCmd.AddCommand(gitCmd)
 }

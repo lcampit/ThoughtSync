@@ -55,6 +55,22 @@ func (suite *NewGitCmdTestSuite) TestGitPushCmdReturnsError() {
 	suite.repository.AssertCalled(suite.T(), "Push")
 }
 
+func (suite *NewGitCmdTestSuite) TestGitPullCmdReturns() {
+	suite.repository.On("Pull").Return(nil)
+	err := cmd.VaultGitPull(suite.repository)
+
+	suite.Assert().Nil(err)
+	suite.repository.AssertCalled(suite.T(), "Pull")
+}
+
+func (suite *NewGitCmdTestSuite) TestGitPullCmdReturnsError() {
+	suite.repository.On("Pull").Return(errors.New("failed"))
+	err := cmd.VaultGitPull(suite.repository)
+
+	suite.Assert().NotNil(err)
+	suite.repository.AssertCalled(suite.T(), "Pull")
+}
+
 func (suite *NewGitCmdTestSuite) TestGitSyncCmd() {
 	commitMessage := "message"
 	suite.repository.On("Pull").Return(nil)
