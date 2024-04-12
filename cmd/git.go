@@ -14,7 +14,7 @@ import (
 
 // SyncWithGit adds all files to staging, commits with a given
 // message and pushes to remote if the pushToRemote flag is true
-func SyncWithGit(vaultPath, commitMessage string, pushToRemote bool) error {
+func SyncWithGit(vaultPath, commitMessage string, remoteEnabled, skipPush bool) error {
 	repo, err := git.PlainOpen(vaultPath)
 	if err != nil {
 		return err
@@ -49,7 +49,12 @@ func SyncWithGit(vaultPath, commitMessage string, pushToRemote bool) error {
 		return err
 	}
 
-	if pushToRemote {
+	if !remoteEnabled {
+		fmt.Printf("remote option is not enabled")
+		return nil
+	}
+
+	if !skipPush {
 		err = repo.Push(&git.PushOptions{})
 		return err
 	}
@@ -91,8 +96,9 @@ func init() {
 			}
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			commitMessage := viper.GetString(config.GIT_COMMIT_MESSAGE_KEY)
-			pushToRemote := viper.GetBool(config.GIT_REMOTE_ENABLED_KEY)
-			return SyncWithGit(vaultPath, commitMessage, pushToRemote)
+			remoteEnabled := viper.GetBool(config.GIT_REMOTE_ENABLED_KEY)
+			skipPush, _ := cmd.Flags().GetBool("no-push")
+			return SyncWithGit(vaultPath, commitMessage, remoteEnabled, skipPush)
 		},
 	}
 
@@ -108,8 +114,7 @@ func init() {
 			return VaultGitStatus(vaultPath)
 		},
 	}
-	syncCmd.Flags().BoolP("push", "p", viper.GetBool(config.GIT_REMOTE_ENABLED_KEY), "Folder of the note vault to put the new note in")
-	viper.BindPFlag(config.GIT_REMOTE_ENABLED_KEY, syncCmd.Flags().Lookup("push"))
+	syncCmd.Flags().Bool("no-push", viper.GetBool(config.GIT_REMOTE_ENABLED_KEY), "do not perform push after git commit")
 
 	gitCmd.AddCommand(syncCmd, statusCmd)
 	RootCmd.AddCommand(gitCmd)
