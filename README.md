@@ -18,15 +18,23 @@ ThoughtSync is a CLI tool that allows users to access
 their own note collection, comfortably from the command line,
 using their own `EDITOR`.
 
-It was born to be used with an [Obsidian](https://obsidian.md/)-type
+ThoughtSync offers git support to add and commit
+changes to users note, with an option to support
+git remotes and pulling/pushing changes.
+
+ThoughtSync was born to be used with an [Obsidian](https://obsidian.md/)-type
 vault in mind, but it is compatible with just
 any note collection contained in a
-single vault-like folder.
+single folder. This collection is commonly referred to
+as a _vault_.
 
 ## :computer: Tech Stack
 
 ThoughtSync is built in go using the
-[cobra](https://github.com/spf13/cobra) library.
+[cobra](https://github.com/spf13/cobra) framework and a
+handful of other go libraries like
+[go-editor](https://github.com/confluentinc/go-editor) and
+[go-git](https://github.com/go-git/go-git).
 Some other tools used are:
 
 - [mise-en-place](https://mise.jdx.dev/), a polyglot runtime manager to handle
@@ -48,6 +56,8 @@ Current features include:
 - Create or open the note entry for the current day (for those that keep
   a daily journal)
 - Configure note vault path, journal directory, note format and much more
+- Keep track of your vault changes using git and optionally sync it
+  with a remote repository
 
 ### ⚙️ Roadmap
 
@@ -56,7 +66,10 @@ Current features include:
 - [ ] Quickly group notes with a certain tag or containing a certain word
 - [ ] Quickly read a note content without opening it using `cat` or similar
 - [x] Preferences in a single configuration file
+- [x] Git syncing with remote options
 - [ ] Fuzzy find notes in your vault and open them
+- [x] See the vault git status
+- [ ] Open a tree view of your vault for easy navigation
 
 ## :rocket: Installation
 
@@ -68,12 +81,20 @@ go install github.com/Leo-Campo/ThoughtSync
 
 or simply by downloading the executable from the releases page
 
+It's suggested to use an alias such as `alias ts=ThoughtSync`
+
 ### 🔥 Usage
 
 The following is a list of available commands:
 
 - `thoughtsync new <filename.txt>` to create a new note in your vault
 - `thoughtsync today` to create and/or open the journal note of today
+- `thoughtysync git` contains all git-related commands:
+  - `sync` to stage, commit and optionally push your vault to
+    your remote git repository.
+  - `status` to see the current vault git status
+  - `push` manually pushes changes to the remote vault git repository
+  - `pull` manually pulls changes from the remote vault git repository
 
 ### ⚙️ Configuration
 
@@ -91,6 +112,15 @@ The configuration file is defined as follows:
   - `format` defines the format used to give a name to your journal
     notes, such as "2006-02-01", without extension
     - currently supported formats are `YYYY-MM-DD`, `MM-DD-YYYY`
+- The `git` section contains all options related to managing your
+  notes with git:
+  - `enable` enables git support
+  - `remote` enables git remote support and
+    pushing to the remote with `thoughtsync sync`
+    (has no effect if `git.enable` is false)
+  - `remote-name` sets the git remote name to push to / pull from
+  - `commit-message` contains the commit message used with `thoughtsync git sync`
+  - `ssh` to use ssh authentication for your vault git-related commands
 
 Here's an exhaustive configuration example:
 
@@ -100,9 +130,18 @@ vault:
   path: $HOME/vault # Default: $HOME/thoughtsync
   extension: ".txt" # Default: ".md"
 
+# Contains all journal specific options
 journal:
   directory: my-own-journal # Default: journal
   format: "YYYY-MM-DD" # Default: "YYYY-MM-DD"
+
+# Contains all git specific options
+git:
+  enable: true # default false
+  remote: true # default false
+  remote-name: "remote" # default origin
+  commit-message: "thoughtsync sync" # default "thoughtsync: Synced with git"
+  ssh: true # default false
 ```
 
 ### :running_man: Running the project

@@ -8,3 +8,8 @@ packages:
       Editor:
         config:
           with-expecter: False
+  ThoughtSync/cmd/repository:
+    interfaces:
+      Repository:
+        config:
+          with-expecter: False
