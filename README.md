@@ -109,11 +109,12 @@ The configuration file is defined as follows:
 - The `git` section contains all options related to managing your
   notes with git:
   - `enable` enables git support
-  - `remote` enable git remote support and
+  - `remote` enables git remote support and
     pushing to the remote with `thoughtsync sync`
     (has no effect if `git.enable` is false)
-  - `commit-message` contains the commit message used with `thoughtsync sync`
-  - `ssh` to enable ssh authentication for your vault
+  - `remote-name` sets the git remote name to push to / pull from
+  - `commit-message` contains the commit message used with `thoughtsync git sync`
+  - `ssh` to use ssh authentication for your vault git-related commands
 
 Here's an exhaustive configuration example:
 
