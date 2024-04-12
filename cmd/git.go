@@ -81,6 +81,8 @@ func SyncWithGit(vaultPath, commitMessage string, remoteEnabled, skipPush, useSS
 	return nil
 }
 
+// VaultGitStatus prints to stdout the status
+// of the vault git repo, i.e. its current working tree
 func VaultGitStatus(vaultPath string) error {
 	repo, err := git.PlainOpen(vaultPath)
 	if err != nil {
