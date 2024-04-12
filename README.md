@@ -89,6 +89,7 @@ The following is a list of available commands:
   - `sync` to stage, commit and optionally push your vault to
     your remote git repository.
   - `status` to see the current vault git status
+  - `push` manually pushes changes to the remote vault git repository
 
 ### ⚙️ Configuration
 
