@@ -102,6 +102,30 @@ func VaultGitStatus(vaultPath string) error {
 	return nil
 }
 
+// VaultGitPush pushses changes to the vault remote git repo
+func VaultGitPush(vaultPath string, useSSHAuth bool) error {
+	repo, err := git.PlainOpen(vaultPath)
+	if err != nil {
+		return err
+	}
+
+	pushOptions := &git.PushOptions{
+		RemoteName: "origin",
+	}
+
+	if useSSHAuth {
+		authMethod, err := ssh.DefaultAuthBuilder("git")
+		if err != nil {
+			return err
+		}
+
+		pushOptions.Auth = authMethod
+	}
+
+	err = repo.Push(pushOptions)
+	return err
+}
+
 func init() {
 	gitCmd := &cobra.Command{
 		Use:   "git",
@@ -138,6 +162,19 @@ func init() {
 	}
 	syncCmd.Flags().Bool("no-push", viper.GetBool(config.GIT_REMOTE_ENABLED_KEY), "do not perform push after git commit")
 
-	gitCmd.AddCommand(syncCmd, statusCmd)
+	pushCmd := &cobra.Command{
+		Use:   "push",
+		Short: "Push changes to the vault remote git repo",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
+			if !gitSyncEnabled {
+				return fmt.Errorf("git sync is not enabled in your config file")
+			}
+			vaultPath := viper.GetString(config.VAULT_KEY)
+			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
+			return VaultGitPush(vaultPath, useSSHAuth)
+		},
+	}
+	gitCmd.AddCommand(syncCmd, statusCmd, pushCmd)
 	RootCmd.AddCommand(gitCmd)
 }
