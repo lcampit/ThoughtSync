@@ -18,7 +18,11 @@ ThoughtSync is a CLI tool that allows users to access
 their own note collection, comfortably from the command line,
 using their own `EDITOR`.
 
-It was born to be used with an [Obsidian](https://obsidian.md/)-type
+ThoughtSync offers git support to add and commit
+changes to users note, with an option to support
+git remotes and pulling/pushing changes.
+
+ThoughtSync was born to be used with an [Obsidian](https://obsidian.md/)-type
 vault in mind, but it is compatible with just
 any note collection contained in a
 single folder. This collection is commonly referred to
@@ -90,6 +94,7 @@ The following is a list of available commands:
     your remote git repository.
   - `status` to see the current vault git status
   - `push` manually pushes changes to the remote vault git repository
+  - `pull` manually pulls changes from the remote vault git repository
 
 ### ⚙️ Configuration
 
