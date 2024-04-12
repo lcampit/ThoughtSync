@@ -132,6 +132,7 @@ journal:
 git:
   enable: true # default false
   remote: true # default false
+  remote-name: "remote" # default origin
   commit-message: "thoughtsync sync" # default "thoughtsync: Synced with git"
   ssh: true # default false
 ```
