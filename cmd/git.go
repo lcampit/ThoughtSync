@@ -144,7 +144,7 @@ func init() {
 			remoteEnabled := viper.GetBool(config.GIT_REMOTE_ENABLED_KEY)
 			skipPush, _ := cmd.Flags().GetBool("no-push")
 			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
-			remoteName := viper.GetString(config.GIT_REMOTE_KEY)
+			remoteName := viper.GetString(config.GIT_REMOTE_NAME_KEY)
 			return SyncWithGit(vaultPath, commitMessage, remoteName, remoteEnabled, skipPush, useSSHAuth)
 		},
 	}
@@ -173,7 +173,7 @@ func init() {
 			}
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
-			remoteName := viper.GetString(config.GIT_REMOTE_KEY)
+			remoteName := viper.GetString(config.GIT_REMOTE_NAME_KEY)
 			return VaultGitPush(vaultPath, remoteName, useSSHAuth)
 		},
 	}
