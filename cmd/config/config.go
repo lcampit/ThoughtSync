@@ -36,6 +36,8 @@ const (
 	DEFAULT_GIT_REMOTE_ENABLED = false
 	GIT_AUTH_SSH_KEY           = "git.ssh"
 	DEFAULT_GIT_AUTH_SSH       = false
+	GIT_REMOTE_KEY             = "git.remote"
+	DEFAULT_GIT_REMOTE         = "origin"
 )
 
 func InitConfig() {
@@ -53,6 +55,7 @@ func InitConfig() {
 	viper.SetDefault(GIT_COMMIT_MESSAGE_KEY, DEFAULT_GIT_COMMIT_MESSAGE)
 	viper.SetDefault(GIT_REMOTE_ENABLED_KEY, DEFAULT_GIT_REMOTE_ENABLED)
 	viper.SetDefault(GIT_AUTH_SSH_KEY, DEFAULT_GIT_AUTH_SSH)
+	viper.SetDefault(GIT_REMOTE_KEY, DEFAULT_GIT_REMOTE)
 
 	if err := viper.ReadInConfig(); err != nil {
 		os.Exit(1)

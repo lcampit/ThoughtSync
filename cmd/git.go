@@ -15,14 +15,14 @@ import (
 
 // SyncWithGit adds all files to staging, commits with a given
 // message and pushes to remote if the pushToRemote flag is true
-func SyncWithGit(vaultPath, commitMessage string, remoteEnabled, skipPush, useSSHAuth bool) error {
+func SyncWithGit(vaultPath, commitMessage, remoteName string, remoteEnabled, skipPush, useSSHAuth bool) error {
 	repo, err := git.PlainOpen(vaultPath)
 	if err != nil {
 		return err
 	}
 
 	pullOptions := &git.PullOptions{
-		RemoteName: "origin",
+		RemoteName: remoteName,
 	}
 
 	commitOptions := &git.CommitOptions{
@@ -103,14 +103,14 @@ func VaultGitStatus(vaultPath string) error {
 }
 
 // VaultGitPush pushses changes to the vault remote git repo
-func VaultGitPush(vaultPath string, useSSHAuth bool) error {
+func VaultGitPush(vaultPath, remoteName string, useSSHAuth bool) error {
 	repo, err := git.PlainOpen(vaultPath)
 	if err != nil {
 		return err
 	}
 
 	pushOptions := &git.PushOptions{
-		RemoteName: "origin",
+		RemoteName: remoteName,
 	}
 
 	if useSSHAuth {
@@ -144,7 +144,8 @@ func init() {
 			remoteEnabled := viper.GetBool(config.GIT_REMOTE_ENABLED_KEY)
 			skipPush, _ := cmd.Flags().GetBool("no-push")
 			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
-			return SyncWithGit(vaultPath, commitMessage, remoteEnabled, skipPush, useSSHAuth)
+			remoteName := viper.GetString(config.GIT_REMOTE_KEY)
+			return SyncWithGit(vaultPath, commitMessage, remoteName, remoteEnabled, skipPush, useSSHAuth)
 		},
 	}
 
@@ -172,7 +173,8 @@ func init() {
 			}
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
-			return VaultGitPush(vaultPath, useSSHAuth)
+			remoteName := viper.GetString(config.GIT_REMOTE_KEY)
+			return VaultGitPush(vaultPath, remoteName, useSSHAuth)
 		},
 	}
 	gitCmd.AddCommand(syncCmd, statusCmd, pushCmd)
