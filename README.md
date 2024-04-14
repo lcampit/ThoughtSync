@@ -18,7 +18,7 @@ ThoughtSync is a CLI tool that allows users to access
 their own note collection, comfortably from the command line,
 using their own `EDITOR`.
 
-ThoughtSync offers git support to add and commit
+It offers git support to add and commit
 changes to users note, with an option to support
 git remotes and pulling/pushing changes.
 
@@ -76,7 +76,7 @@ Current features include:
 ThoughtSync can be installed as any go product with `go install`:
 
 ```bash
-go install github.com/Leo-Campo/ThoughtSync
+go install github.com/lcampit/ThoughtSync
 ```
 
 or simply by downloading the executable from the releases page
