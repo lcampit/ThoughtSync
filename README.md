@@ -1,4 +1,5 @@
 <div align="center"><p>
+  <img src="./media/thoughtsync-logo.PNG" alt="ThoughtSync Logo" width="500" /> <br/>
   <a href="https://github.com/Leo-Campo/ThoughtSync/releases/latest">
      <img alt="Latest release" src="https://img.shields.io/github/v/release/lcampit/ThoughtSync?style=for-the-badge&logo=starship&labelColor=302D41&include_prerelease&sort=semver" />  
   </a>
@@ -8,11 +9,10 @@
   <a href="https://github.com/Leo-Campo/ThoughtSync/blob/main/LICENSE">
     <img alt="License" src="https://img.shields.io/github/license/lcampit/ThoughtSync?style=for-the-badge&logo=starship&color=ee999f&logoColor=D9E0EE&labelColor=302D41" />
   </a>
+  <p><em>Edit notes at the speed of thought</em></p>
 </div>
 
-# Thought Sync
-
-## :pencil: Introduction
+# :pencil: What is this?
 
 ThoughtSync is a CLI tool that allows users to access
 their own note collection, comfortably from the command line,
@@ -28,7 +28,7 @@ any note collection contained in a
 single folder. This collection is commonly referred to
 as a _vault_.
 
-## :computer: Tech Stack
+# :computer: Tech Stack
 
 ThoughtSync is built in go using the
 [cobra](https://github.com/spf13/cobra) framework and a
@@ -45,7 +45,7 @@ Some other tools used are:
   for the `go test` command
 - [act](https://github.com/nektos/act) for testing github actions locally
 
-## ✨ Features
+# ✨ Features
 
 ThoughtSync lets the user open, edit and search
 through their own note collection.
@@ -59,7 +59,7 @@ Current features include:
 - Keep track of your vault changes using git and optionally sync it
   with a remote repository
 
-### ⚙️ Roadmap
+# ⚙️ Roadmap
 
 - [ ] Ability to search through notes using popular
       tools such as [ripgrep](https://github.com/BurntSushi/ripgrep)
@@ -71,7 +71,7 @@ Current features include:
 - [x] See the vault git status
 - [ ] Open a tree view of your vault for easy navigation
 
-## :rocket: Installation
+# :rocket: Installation
 
 ThoughtSync can be installed as any go product with `go install`:
 
@@ -83,7 +83,7 @@ or simply by downloading the executable from the releases page
 
 It's suggested to use an alias such as `alias ts=ThoughtSync`
 
-### 🔥 Usage
+# 🔥 Usage
 
 The following is a list of available commands:
 
@@ -96,7 +96,7 @@ The following is a list of available commands:
   - `push` manually pushes changes to the remote vault git repository
   - `pull` manually pulls changes from the remote vault git repository
 
-### ⚙️ Configuration
+# ⚙️ Configuration
 
 ThoughtSync can be configured using a `thoughtsync.yaml` file
 contained in `$XDG_CONFIG_HOME/thoughtsync/thoughtsync.yaml`
@@ -144,7 +144,7 @@ git:
   ssh: true # default false
 ```
 
-### :running_man: Running the project
+# :running_man: Running the project
 
 The CLI itself has a proper help message accessible
 with the `--help` or `-h` flags. If you clone the repo,
@@ -155,12 +155,12 @@ Assuming [mise](https://mise.jdx.dev/) is installed:
 - `mise run build` will build the project in a single executable `ThoughtSync`
 - `mise run test` will run tests
 
-## :high_brightness: Contributing
+# :high_brightness: Contributing
 
 Contributions are welcome! Feel free to clone the project
 and create pull requests or add issues.
 
-## :date: How it started
+# :date: How did it start?
 
 I've been caressing the idea of building my own second brain
 with notes since I had a job. Being able to write down stuff
