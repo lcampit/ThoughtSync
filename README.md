@@ -41,6 +41,8 @@ Some other tools used are:
   tool versions, env vars and much more
 - [mockery](https://github.com/vektra/mockery), mock generator for go interfaces
 - [testify](https://github.com/stretchr/testify), a go toolkit to write tests
+- [color](https://github.com/fatih/color) to print colored text to the
+  terminal
 - [gotestsum](https://github.com/gotestyourself/gotestsum), a wrapper
   for the `go test` command
 - [act](https://github.com/nektos/act) for testing github actions locally
@@ -66,6 +68,7 @@ Current features include:
 - [ ] Quickly group notes with a certain tag or containing a certain word
 - [ ] Quickly read a note content without opening it using `cat` or similar
 - [x] Preferences in a single configuration file
+- [ ] Quickly get and set configuration options
 - [x] Git syncing with remote options
 - [ ] Fuzzy find notes in your vault and open them
 - [x] See the vault git status
