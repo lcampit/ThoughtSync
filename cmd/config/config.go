@@ -5,6 +5,7 @@ import (
 
 	gopath "path"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -63,6 +64,7 @@ func InitConfig() {
 	viper.SetDefault(VAULT_NOTES_EXTENSION_KEY, DEFAULT_VAULT_NOTES_EXTENSION)
 
 	if err := viper.ReadInConfig(); err != nil {
+		color.Red(err.Error())
 		os.Exit(1)
 	}
 }
