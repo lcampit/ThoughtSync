@@ -1,11 +1,17 @@
 package printer
 
-import "github.com/fatih/color"
+import (
+	"strconv"
+	"strings"
+
+	"github.com/fatih/color"
+)
 
 type Printer interface {
 	Info(message string)
 	ConfigMainKey(message string)
 	ConfigSubKey(message string)
+	Error(message string)
 }
 
 type printer struct{}
@@ -23,5 +29,25 @@ func (p *printer) ConfigMainKey(message string) {
 }
 
 func (p *printer) ConfigSubKey(message string) {
-	color.New(color.FgCyan).Add(color.Bold).Println(message)
+	splitKeyValue := strings.Split(message, ":")
+	key := splitKeyValue[0]
+	value := strings.TrimSpace(splitKeyValue[1])
+	color.New(color.FgWhite).Printf("%s: ", key)
+	p.PrintConfigValueByType(value)
+}
+
+func (p *printer) PrintConfigValueByType(value string) {
+	if valueAsBoolean, err := strconv.ParseBool(value); err == nil {
+		if valueAsBoolean {
+			color.Green(value)
+		} else {
+			color.Red(value)
+		}
+	} else {
+		color.New(color.FgCyan).Add(color.Bold).Println(value)
+	}
+}
+
+func (p *printer) Error(message string) {
+	color.Red(message)
 }

@@ -66,3 +66,12 @@ func InitConfig() {
 		os.Exit(1)
 	}
 }
+
+func GetAllConfigKeys() []string {
+	return viper.AllKeys()
+}
+
+func SetConfig(configKey, configValue string) {
+	viper.Set(configKey, configValue)
+	viper.WriteConfig()
+}
