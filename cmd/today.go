@@ -45,7 +45,7 @@ func init() {
 			filename, err := date.Format(time.Now(), format)
 			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
 			if err != nil {
-				Printer.CustomError(fmt.Sprintf("error getting journal filename: %w", err))
+				Printer.CustomError(fmt.Sprintf("error getting journal filename: %s", err.Error()))
 				return
 			}
 			err = OpenTodayNote(editor, vaultJournalPath, filename, fileExtension)
