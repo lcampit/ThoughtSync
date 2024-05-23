@@ -81,10 +81,11 @@ func init() {
 	syncCmd := &cobra.Command{
 		Use:   "sync",
 		Short: "Stage, commit and push all changes in your note vault to your remote repository",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
 			if !gitSyncEnabled {
-				return fmt.Errorf("git sync is not enabled in your config file")
+				Printer.CustomError("git sync is not enabled in your config file")
+				return
 			}
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			commitMessage := viper.GetString(config.GIT_COMMIT_MESSAGE_KEY)
@@ -95,26 +96,36 @@ func init() {
 
 			repository, err := repository.OpenRepository(vaultPath, remoteName, useSSHAuth)
 			if err != nil {
-				return err
+				Printer.PlainError(err)
+				return
 			}
-			return SyncWithGit(repository, commitMessage, remoteEnabled, skipPush)
+			err = SyncWithGit(repository, commitMessage, remoteEnabled, skipPush)
+			if err != nil {
+				Printer.PlainError(err)
+			}
 		},
 	}
 
 	statusCmd := &cobra.Command{
 		Use:   "status",
 		Short: "Print out the git status of your vault repo",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
 			if !gitSyncEnabled {
-				return fmt.Errorf("git sync is not enabled in your config file")
+				Printer.CustomError("git sync is not enabled in your config file")
+				return
 			}
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			repository, err := repository.OpenRepository(vaultPath, "", false)
 			if err != nil {
-				return err
+				Printer.PlainError(err)
+				return
 			}
-			return VaultGitStatus(repository)
+			err = VaultGitStatus(repository)
+			if err != nil {
+				Printer.PlainError(err)
+				return
+			}
 		},
 	}
 	syncCmd.Flags().Bool("no-push", viper.GetBool(config.GIT_REMOTE_ENABLED_KEY), "do not perform push after git commit")
@@ -122,10 +133,11 @@ func init() {
 	pushCmd := &cobra.Command{
 		Use:   "push",
 		Short: "Push changes to the vault remote git repo",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
 			if !gitSyncEnabled {
-				return fmt.Errorf("git sync is not enabled in your config file")
+				Printer.CustomError("git sync is not enabled in your config file")
+				return
 			}
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
@@ -133,19 +145,24 @@ func init() {
 
 			repository, err := repository.OpenRepository(vaultPath, remoteName, useSSHAuth)
 			if err != nil {
-				return err
+				Printer.PlainError(err)
+				return
 			}
-			return VaultGitPush(repository)
+			err = VaultGitPush(repository)
+			if err != nil {
+				Printer.PlainError(err)
+			}
 		},
 	}
 
 	pullCmd := &cobra.Command{
 		Use:   "pull",
 		Short: "Pull changes from the vault remote git repo",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
 			if !gitSyncEnabled {
-				return fmt.Errorf("git sync is not enabled in your config file")
+				Printer.CustomError("git sync is not enabled in your config file")
+				return
 			}
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			useSSHAuth := viper.GetBool(config.GIT_AUTH_SSH_KEY)
@@ -153,9 +170,13 @@ func init() {
 
 			repository, err := repository.OpenRepository(vaultPath, remoteName, useSSHAuth)
 			if err != nil {
-				return err
+				Printer.PlainError(err)
+				return
 			}
-			return VaultGitPush(repository)
+			err = VaultGitPull(repository)
+			if err != nil {
+				Printer.PlainError(err)
+			}
 		},
 	}
 

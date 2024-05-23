@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/lcampit/ThoughtSync/cmd/config"
+	"github.com/lcampit/ThoughtSync/cmd/printer"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -19,6 +20,9 @@ var RootCmd = &cobra.Command{
   in managing their notes. It allows to create and edit notes at 
   the speed of thought`,
 }
+
+// Global logger
+var Printer = printer.NewPrinter()
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.

@@ -36,7 +36,7 @@ func getConfig(printer printer.Printer) {
 
 func setConfig(printer printer.Printer, configKey, configValue string) {
 	if !slices.Contains(config.GetAllConfigKeys(), configKey) {
-		printer.Error(fmt.Sprintf("%s is not a valid configuration key", configKey))
+		printer.CustomError(fmt.Sprintf("%s is not a valid configuration key", configKey))
 	}
 
 	config.SetConfig(configKey, configValue)
