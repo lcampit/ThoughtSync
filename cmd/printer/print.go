@@ -11,7 +11,8 @@ type Printer interface {
 	Info(message string)
 	ConfigMainKey(message string)
 	ConfigSubKey(message string)
-	Error(message string)
+	CustomError(message string)
+	PlainError(err error)
 }
 
 type printer struct{}
@@ -48,6 +49,10 @@ func (p *printer) PrintConfigValueByType(value string) {
 	}
 }
 
-func (p *printer) Error(message string) {
+func (p *printer) CustomError(message string) {
 	color.Red(message)
+}
+
+func (p *printer) PlainError(err error) {
+	color.Red(err.Error())
 }
