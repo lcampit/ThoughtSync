@@ -37,7 +37,7 @@ func init() {
 	todayCmd := &cobra.Command{
 		Use:   "today",
 		Short: "Quickly edit the journal note for today",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			format := viper.GetString(config.JOURNAL_NOTE_FORMAT_KEY)
 			journalDir := viper.GetString(config.JOURNAL_DIRECTORY_KEY)
@@ -45,9 +45,13 @@ func init() {
 			filename, err := date.Format(time.Now(), format)
 			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
 			if err != nil {
-				return fmt.Errorf("error getting journal filename: %w", err)
+				Printer.CustomError(fmt.Sprintf("error getting journal filename: %w", err))
+				return
 			}
-			return OpenTodayNote(editor, vaultJournalPath, filename, fileExtension)
+			err = OpenTodayNote(editor, vaultJournalPath, filename, fileExtension)
+			if err != nil {
+				Printer.PlainError(err)
+			}
 		},
 	}
 	RootCmd.AddCommand(todayCmd)
