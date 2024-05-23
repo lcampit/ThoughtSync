@@ -10,6 +10,18 @@ import (
 	"github.com/spf13/viper"
 )
 
+type Config struct {
+	VaultPath        string `mapstructure:"vault.path"`
+	NotesExtension   string `mapstructure:"vault.extension"`
+	JournalFormat    string `mapstructure:"journal.format"`
+	JournalDirectory string `mapstructure:"journal.directory"`
+	GitCommitMessage string `mapstructure:"git.commit-message"`
+	GitRemoteName    string `mapstructure:"git.remote-name"`
+	GitSyncEnabled   bool   `mapstructure:"git.enable"`
+	GitRemoteEnabled bool   `mapstructure:"git.remote"`
+	GitAuthSSH       bool   `mapstructure:"git.ssh"`
+}
+
 const (
 	// Configuration file in ~/.config/CONFIG_DIR/CONFIG_FILE
 	CONFIG_FILE = "thoughtsync"
@@ -67,6 +79,16 @@ func InitConfig() {
 		color.Red(err.Error())
 		os.Exit(1)
 	}
+}
+
+func GetConfig() *Config {
+	conf := &Config{}
+	err := viper.Unmarshal(conf)
+	if err != nil {
+		color.Red(err.Error())
+		os.Exit(1)
+	}
+	return conf
 }
 
 func GetAllConfigKeys() []string {
