@@ -46,6 +46,8 @@ Some other tools used are:
 - [gotestsum](https://github.com/gotestyourself/gotestsum), a wrapper
   for the `go test` command
 - [act](https://github.com/nektos/act) for testing github actions locally
+- [color](https://github.com/fatih/color) to print colored
+  text to the terminal
 
 # ✨ Features
 
