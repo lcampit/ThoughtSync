@@ -42,12 +42,15 @@ func init() {
 		Use:   "new -t <type> <filename>",
 		Short: "Creates and opens the given file in your $EDITOR",
 		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			filename := args[0]
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			noteType, _ := cmd.Flags().GetString("dir")
 			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
-			return NewNote(editor, vaultPath, noteType, filename, fileExtension)
+			err := NewNote(editor, vaultPath, noteType, filename, fileExtension)
+			if err != nil {
+				Printer.PlainError(err)
+			}
 		},
 	}
 	newCmd.Flags().StringP("dir", "d", "", "Vault directory to put the new note in")

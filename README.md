@@ -41,9 +41,13 @@ Some other tools used are:
   tool versions, env vars and much more
 - [mockery](https://github.com/vektra/mockery), mock generator for go interfaces
 - [testify](https://github.com/stretchr/testify), a go toolkit to write tests
+- [color](https://github.com/fatih/color) to print colored text to the
+  terminal
 - [gotestsum](https://github.com/gotestyourself/gotestsum), a wrapper
   for the `go test` command
 - [act](https://github.com/nektos/act) for testing github actions locally
+- [color](https://github.com/fatih/color) to print colored
+  text to the terminal
 
 # ✨ Features
 
@@ -66,6 +70,7 @@ Current features include:
 - [ ] Quickly group notes with a certain tag or containing a certain word
 - [ ] Quickly read a note content without opening it using `cat` or similar
 - [x] Preferences in a single configuration file
+- [x] Quickly get and set configuration options
 - [x] Git syncing with remote options
 - [ ] Fuzzy find notes in your vault and open them
 - [x] See the vault git status
@@ -95,6 +100,11 @@ The following is a list of available commands:
   - `status` to see the current vault git status
   - `push` manually pushes changes to the remote vault git repository
   - `pull` manually pulls changes from the remote vault git repository
+- `thoughtsync config` contains all options related to the tool configuration:
+  - The base commands prints the current configuration
+    options in a nicely indented view
+  - `set` sets a configuration options using the given value
+    and saves the configuration changes
 
 # ⚙️ Configuration
 
@@ -143,6 +153,12 @@ git:
   commit-message: "thoughtsync sync" # default "thoughtsync: Synced with git"
   ssh: true # default false
 ```
+
+> [!NOTE]
+> Some configuration options need to be the expected type, i.e.
+> booleans for the enable/disable
+> options. If these options provided from the configuration file are not valid,
+> the default one will be silently used
 
 # :running_man: Running the project
 
