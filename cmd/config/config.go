@@ -76,7 +76,7 @@ func InitConfig() {
 	viper.SetDefault(VAULT_NOTES_EXTENSION_KEY, DEFAULT_VAULT_NOTES_EXTENSION)
 
 	if err := viper.ReadInConfig(); err != nil {
-		color.Red(err.Error())
+		color.Red("error in reading configuration: %v", err.Error())
 		os.Exit(1)
 	}
 }
