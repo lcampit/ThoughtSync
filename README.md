@@ -98,6 +98,11 @@ The following is a list of available commands:
   - `status` to see the current vault git status
   - `push` manually pushes changes to the remote vault git repository
   - `pull` manually pulls changes from the remote vault git repository
+- `thoughtsync config` contains all options related to the tool configuration:
+  - The base commands prints the current configuration
+    options in a nicely indented view
+  - `set` sets a configuration options using the given value
+    and saves the configuration changes
 
 # ⚙️ Configuration
 
