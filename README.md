@@ -68,7 +68,7 @@ Current features include:
 - [ ] Quickly group notes with a certain tag or containing a certain word
 - [ ] Quickly read a note content without opening it using `cat` or similar
 - [x] Preferences in a single configuration file
-- [ ] Quickly get and set configuration options
+- [x] Quickly get and set configuration options
 - [x] Git syncing with remote options
 - [ ] Fuzzy find notes in your vault and open them
 - [x] See the vault git status
@@ -146,6 +146,12 @@ git:
   commit-message: "thoughtsync sync" # default "thoughtsync: Synced with git"
   ssh: true # default false
 ```
+
+> [!NOTE]
+> Some configuration options need to be the expected type, i.e.
+> booleans for the enable/disable
+> options. If these options provided from the configuration file are not valid,
+> the default one will be silently used
 
 # :running_man: Running the project
 
