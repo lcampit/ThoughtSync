@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"fmt"
-
 	gopath "path"
 	filepath "path/filepath"
 
@@ -16,17 +15,17 @@ import (
 	"github.com/spf13/viper"
 )
 
-// NewNote opens the given file filename in vaultType, optionally in directory
-// noteType, using the editor provided
-func NewNote(editor editor.Editor, vaultPath, noteType, filename, fileExtension string) error {
-	folderPath := gopath.Join(vaultPath, noteType)
-	completeFilename := filename
-	if filepath.Ext(filename) != fileExtension {
+func OpenInboxNote(editor editor.Editor, vaultPath, inboxNotePath, fileExtension string) error {
+	completeFilename := gopath.Base(inboxNotePath)
+
+	inboxDirPath := gopath.Dir(inboxNotePath)
+	if filepath.Ext(inboxNotePath) != fileExtension {
 		completeFilename += fileExtension
 	}
+	folderPath := gopath.Join(vaultPath, inboxDirPath)
 	err := path.EnsurePresent(folderPath, completeFilename)
 	if err != nil {
-		return fmt.Errorf("error in ensure present for dir %s, file %s: %v", folderPath, filename, err)
+		return fmt.Errorf("error in ensure present for dir %s, file %s: %v", folderPath, completeFilename, err)
 	}
 	fullPath := gopath.Join(folderPath, completeFilename)
 	err = editor.Edit(fullPath)
@@ -38,23 +37,21 @@ func NewNote(editor editor.Editor, vaultPath, noteType, filename, fileExtension 
 
 func init() {
 	editor := editor.NewEditor()
-	newCmd := &cobra.Command{
-		Use:     "new -t <type> <filename>",
-		Short:   "Creates and opens the given file in your $EDITOR",
-		Args:    cobra.ExactArgs(1),
-		Aliases: []string{"n"},
+	InboxCmd := &cobra.Command{
+		Use:     "inbox",
+		Short:   "Creates and opens your inbox note in your $EDITOR",
+		Args:    cobra.ExactArgs(0),
+		Aliases: []string{"i"},
 		Run: func(cmd *cobra.Command, args []string) {
-			filename := args[0]
 			vaultPath := viper.GetString(config.VAULT_KEY)
-			noteType, _ := cmd.Flags().GetString("dir")
 			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
-			err := NewNote(editor, vaultPath, noteType, filename, fileExtension)
+			inboxNotePath := viper.GetString(config.INBOX_NOTE_KEY)
+			err := OpenInboxNote(editor, vaultPath, inboxNotePath, fileExtension)
 			if err != nil {
 				Printer.PlainError(err)
 			}
 		},
 	}
-	newCmd.Flags().StringP("dir", "d", "", "Vault directory to put the new note in")
 
-	RootCmd.AddCommand(newCmd)
+	RootCmd.AddCommand(InboxCmd)
 }

@@ -35,8 +35,10 @@ func OpenTodayNote(editor editor.Editor, vaultJournalPath, filename, extension s
 func init() {
 	editor := editor.NewEditor()
 	todayCmd := &cobra.Command{
-		Use:   "today",
-		Short: "Quickly edit the journal note for today",
+		Use:     "today",
+		Short:   "Quickly edit the journal note for today",
+		Aliases: []string{"t"},
+		Args:    cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			format := viper.GetString(config.JOURNAL_NOTE_FORMAT_KEY)

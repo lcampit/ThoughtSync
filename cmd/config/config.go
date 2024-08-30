@@ -53,6 +53,10 @@ const (
 	DEFAULT_GIT_AUTH_SSH       = false
 	GIT_REMOTE_NAME_KEY        = "git.remote-name"
 	DEFAULT_GIT_REMOTE_NAME    = "origin"
+
+	// Inbox catch-all note
+	INBOX_NOTE_KEY     = "vault.inbox"
+	DEFAULT_INBOX_NOTE = "inbox"
 )
 
 // InitConfig Loads in ThoughtSync config
@@ -74,6 +78,8 @@ func InitConfig() {
 	viper.SetDefault(GIT_AUTH_SSH_KEY, DEFAULT_GIT_AUTH_SSH)
 	viper.SetDefault(GIT_REMOTE_NAME_KEY, DEFAULT_GIT_REMOTE_NAME)
 	viper.SetDefault(VAULT_NOTES_EXTENSION_KEY, DEFAULT_VAULT_NOTES_EXTENSION)
+
+	viper.SetDefault(INBOX_NOTE_KEY, DEFAULT_INBOX_NOTE)
 
 	if err := viper.ReadInConfig(); err != nil {
 		color.Red("error in reading configuration: %v", err.Error())
