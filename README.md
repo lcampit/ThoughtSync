@@ -96,6 +96,7 @@ The following is a list of available commands:
 - `thoughtsync today` to create and/or open the journal note of today
 - `thoughtsync inbox` to quickly opne an inbox note to store thoughts and ideas,
   to be processed later
+- `thoughtsync open` to open the vault directory in your editor
 - `thoughtysync git` contains all git-related commands:
   - `sync` to stage, commit and optionally push your vault to
     your remote git repository.
