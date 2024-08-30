@@ -4,7 +4,13 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
 )
+
+type FileInfo struct {
+	Path string
+	Name string
+}
 
 // IsExist returns true if the path
 // provided points to a currently existing file (or directory)
@@ -48,4 +54,26 @@ func EnsurePresent(directoryPath, filename string) error {
 		}
 	}
 	return nil
+}
+
+// ListAllContents returns a slice of all files and directories
+// contained in directoryPath, recursively checking subdirectories
+func ListAllContents(directoryPath string) ([]FileInfo, error) {
+	files := make([]FileInfo, 100)
+	err := filepath.Walk(directoryPath, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		infoStruct := FileInfo{
+			Path: path,
+			Name: info.Name(),
+		}
+		files = append(files, infoStruct)
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	} else {
+		return files, nil
+	}
 }
