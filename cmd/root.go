@@ -17,8 +17,8 @@ var RootCmd = &cobra.Command{
 	Use:   "ThoughtSync",
 	Short: "A tool to manage your notes",
 	Long: `ThoughtSync is a CLI tool that helps command line power users 
-  in managing their notes. It allows to create and edit notes at 
-  the speed of thought`,
+  managing their notes. It allows to create and edit notes at 
+  the speed of thought from anywhere, without leaving the terminal.`,
 }
 
 // Global logger
