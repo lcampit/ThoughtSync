@@ -39,9 +39,10 @@ func NewNote(editor editor.Editor, vaultPath, noteType, filename, fileExtension 
 func init() {
 	editor := editor.NewEditor()
 	newCmd := &cobra.Command{
-		Use:   "new -t <type> <filename>",
-		Short: "Creates and opens the given file in your $EDITOR",
-		Args:  cobra.ExactArgs(1),
+		Use:     "new -t <type> <filename>",
+		Short:   "Creates and opens the given file in your $EDITOR",
+		Args:    cobra.ExactArgs(1),
+		Aliases: []string{"n"},
 		Run: func(cmd *cobra.Command, args []string) {
 			filename := args[0]
 			vaultPath := viper.GetString(config.VAULT_KEY)

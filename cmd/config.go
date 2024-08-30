@@ -49,6 +49,7 @@ func init() {
 		Use:     "config",
 		Short:   "Contains all commands related to thoughtsync configuration",
 		Aliases: []string{"c"},
+		Args:    cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			getConfig()
 		},

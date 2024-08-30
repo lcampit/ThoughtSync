@@ -75,12 +75,15 @@ func VaultGitPull(repository repository.Repository) error {
 
 func init() {
 	gitCmd := &cobra.Command{
-		Use:   "git",
-		Short: "Git related commands",
+		Use:     "git",
+		Short:   "Contains all commands related to Git",
+		Args:    cobra.ExactArgs(0),
+		Aliases: []string{"g"},
 	}
 	syncCmd := &cobra.Command{
 		Use:   "sync",
 		Short: "Stage, commit and push all changes in your note vault to your remote repository",
+		Args:  cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
 			if !gitSyncEnabled {
@@ -109,6 +112,7 @@ func init() {
 	statusCmd := &cobra.Command{
 		Use:   "status",
 		Short: "Print out the git status of your vault repo",
+		Args:  cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
 			if !gitSyncEnabled {
@@ -133,6 +137,7 @@ func init() {
 	pushCmd := &cobra.Command{
 		Use:   "push",
 		Short: "Push changes to the vault remote git repo",
+		Args:  cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
 			if !gitSyncEnabled {
@@ -158,6 +163,7 @@ func init() {
 	pullCmd := &cobra.Command{
 		Use:   "pull",
 		Short: "Pull changes from the vault remote git repo",
+		Args:  cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			gitSyncEnabled := viper.GetBool(config.GIT_SYNC_ENABLED_KEY)
 			if !gitSyncEnabled {

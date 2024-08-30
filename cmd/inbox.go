@@ -38,9 +38,10 @@ func OpenInboxNote(editor editor.Editor, vaultPath, inboxNotePath, fileExtension
 func init() {
 	editor := editor.NewEditor()
 	InboxCmd := &cobra.Command{
-		Use:   "inbox",
-		Short: "Creates and opens your inbox note in your $EDITOR",
-		Args:  cobra.ExactArgs(0),
+		Use:     "inbox",
+		Short:   "Creates and opens your inbox note in your $EDITOR",
+		Args:    cobra.ExactArgs(0),
+		Aliases: []string{"i"},
 		Run: func(cmd *cobra.Command, args []string) {
 			vaultPath := viper.GetString(config.VAULT_KEY)
 			fileExtension := viper.GetString(config.VAULT_NOTES_EXTENSION_KEY)
