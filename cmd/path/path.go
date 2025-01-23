@@ -56,19 +56,21 @@ func EnsurePresent(directoryPath, filename string) error {
 	return nil
 }
 
-// ListAllContents returns a slice of all files and directories
+// ListAllFiles returns a slice of all files
 // contained in directoryPath, recursively checking subdirectories
-func ListAllContents(directoryPath string) ([]FileInfo, error) {
-	files := make([]FileInfo, 100)
+func ListAllFiles(directoryPath string) ([]FileInfo, error) {
+	files := make([]FileInfo, 0)
 	err := filepath.Walk(directoryPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-		infoStruct := FileInfo{
-			Path: path,
-			Name: info.Name(),
+		if !info.IsDir() {
+			infoStruct := FileInfo{
+				Path: path,
+				Name: info.Name(),
+			}
+			files = append(files, infoStruct)
 		}
-		files = append(files, infoStruct)
 		return nil
 	})
 	if err != nil {
