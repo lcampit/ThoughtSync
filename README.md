@@ -12,20 +12,6 @@
   <p><em>Edit notes at the speed of thought</em></p>
 </div>
 
-<!--toc:start-->
-
-- [:pencil: What is this?](#pencil-what-is-this)
-- [:computer: Tech Stack](#computer-tech-stack)
-- [✨ Features](#features)
-- [⚙️ Roadmap](#️-roadmap)
-- [:rocket: Installation](#rocket-installation)
-- [🔥 Usage](#🔥-usage)
-- [⚙️ Configuration](#️-configuration)
-- [:running_man: Running the project](#runningman-running-the-project)
-- [:high_brightness: Contributing](#highbrightness-contributing)
-- [:date: How did it start?](#date-how-did-it-start)
-<!--toc:end-->
-
 # :pencil: What is this?
 
 ThoughtSync is a CLI tool that allows users to access
