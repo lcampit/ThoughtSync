@@ -68,11 +68,13 @@ Current features include:
 - [ ] Ability to search through notes using popular
       tools such as [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [ ] Quickly group notes with a certain tag or containing a certain word
-- [ ] Quickly read a note content without opening it using `cat` or similar
+- [x] Quickly read a note content without opening it using `cat` or similar
+  - [ ] Freely select the program used (i.e. `cat`, `bat`, etc)
+        to output the file contents
 - [x] Preferences in a single configuration file
 - [x] Quickly get and set configuration options
 - [x] Git syncing with remote options
-- [ ] Fuzzy find notes in your vault and open them
+- [x] Fuzzy find notes in your vault and open them
 - [x] See the vault git status
 - [ ] Open a tree view of your vault for easy navigation
 
@@ -96,7 +98,8 @@ The following is a list of available commands:
 - `thoughtsync today` to create and/or open the journal note of today
 - `thoughtsync inbox` to quickly open an inbox note to store thoughts and ideas,
   to be processed later
-- `thoughtsync open` to open the vault directory in your editor
+- `thoughtsync vault` to open the vault directory in your editor
+- `thoughtsync open` to fuzzy find and open the selected note in your editor
 - `thoughtysync git` contains all git-related commands:
   - `sync` to stage, commit and optionally push your vault to
     your remote git repository.
@@ -108,6 +111,8 @@ The following is a list of available commands:
     options in a nicely indented view
   - `set` sets a configuration options using the given value
     and saves the configuration changes
+- `thoughtsync read` to fuzzy find among all notes and output a note's contents
+  on the terminal
 
 # ⚙️ Configuration
 
