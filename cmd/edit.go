@@ -17,7 +17,7 @@ import (
 func init() {
 	editor := editor.NewEditor()
 	OpenCmd := &cobra.Command{
-		Use:     "open",
+		Use:     "edit",
 		Aliases: []string{"o"},
 		Short:   "Opens a note in your $EDITOR",
 		Args:    cobra.ExactArgs(0),

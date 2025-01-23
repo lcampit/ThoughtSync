@@ -99,7 +99,7 @@ The following is a list of available commands:
 - `thoughtsync inbox` to quickly open an inbox note to store thoughts and ideas,
   to be processed later
 - `thoughtsync vault` to open the vault directory in your editor
-- `thoughtsync open` to fuzzy find and open the selected note in your editor
+- `thoughtsync edit` to fuzzy find and open the selected note in your editor
 - `thoughtysync git` contains all git-related commands:
   - `sync` to stage, commit and optionally push your vault to
     your remote git repository.
