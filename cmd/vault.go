@@ -28,8 +28,8 @@ func OpenVaultDir(editor editor.Editor, vaultPath string) error {
 func init() {
 	editor := editor.NewEditor()
 	OpenCmd := &cobra.Command{
-		Use:     "open",
-		Aliases: []string{"o"},
+		Use:     "vault",
+		Aliases: []string{"v"},
 		Short:   "Opens the vault directory in your $EDITOR",
 		Args:    cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {

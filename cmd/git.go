@@ -26,7 +26,7 @@ func SyncWithGit(repository repository.Repository, commitMessage string, remoteE
 		return err
 	}
 	if isClean {
-		fmt.Println("vault worktree clean, nothing to sync")
+		Printer.Info("vault worktree clean, nothing to sync")
 		return nil
 	}
 
@@ -35,7 +35,7 @@ func SyncWithGit(repository repository.Repository, commitMessage string, remoteE
 		return err
 	}
 	if !remoteEnabled {
-		fmt.Println("remote option is not enabled, skipping push")
+		Printer.Info("remote option is not enabled, skipping push")
 		return nil
 	}
 
@@ -43,7 +43,7 @@ func SyncWithGit(repository repository.Repository, commitMessage string, remoteE
 		err = repository.Push()
 		return err
 	} else {
-		fmt.Println("skipping push")
+		Printer.Info("skipping push")
 	}
 
 	return nil
@@ -56,7 +56,11 @@ func VaultGitStatus(repository repository.Repository) error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("%s\n", status)
+	if status != "" {
+		Printer.Info(fmt.Sprintf("%s\n", status))
+	} else {
+		Printer.Info("vault is clean")
+	}
 	return nil
 }
 
