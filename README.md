@@ -57,8 +57,8 @@ Current features include:
 
 - Editing an existing note;
 - Create a new note in any subdirectory in their own vault;
-- Create or open the note entry for the current day (for those that keep
-  a daily journal)
+- Create or open the note entry for the current day, useful
+  when keeping a daily journal
 - Configure note vault path, journal directory, note format and much more
 - Keep track of your vault changes using git and optionally sync it
   with a remote repository
@@ -94,6 +94,9 @@ The following is a list of available commands:
 
 - `thoughtsync new <filename.txt>` to create a new note in your vault
 - `thoughtsync today` to create and/or open the journal note of today
+- `thoughtsync inbox` to quickly open an inbox note to store thoughts and ideas,
+  to be processed later
+- `thoughtsync open` to open the vault directory in your editor
 - `thoughtysync git` contains all git-related commands:
   - `sync` to stage, commit and optionally push your vault to
     your remote git repository.
@@ -115,7 +118,7 @@ The configuration file is defined as follows:
 
 - The `vault` section contains all configuration related to the note vault
   - `path` contains the full path to the vault main directory
-  - `extension` contains the extension of the notes files in your vault (with dot)
+  - `extension` contains the extension of the notes files in your vault
 - The `journal` section contains all configuration related to the journal notes:
   - `directory` contains the path, relative to `vault.path`,
     to store your journal notes in
@@ -157,7 +160,7 @@ git:
 > [!NOTE]
 > Some configuration options need to be the expected type, i.e.
 > booleans for the enable/disable
-> options. If these options provided from the configuration file are not valid,
+> options. If the options provided from the configuration file are not valid,
 > the default one will be silently used
 
 # :running_man: Running the project
@@ -188,5 +191,5 @@ until I found out [this](https://www.youtube.com/watch?v=zIGJ8NTHF4k)
 video that showed me how to combine Neovim
 with Note taking in [Obsidian](https://obsidian.md/). I made the switch,
 but I noticed how the video author used bash scripts to access its own
-vault. Surely there is some CLI tool I can use for that, right? no? Time to
+vault. Surely there is some CLI tool I can use for that, right? No? Time to
 create my own then!

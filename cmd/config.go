@@ -1,3 +1,6 @@
+/*
+Copyright © 2024 Leonardo Campitelli leonardo932.campitelli@gmail.com
+*/
 package cmd
 
 import (
@@ -44,7 +47,9 @@ func setConfig(configKey, configValue string) {
 func init() {
 	getConfigCmd := &cobra.Command{
 		Use:     "config",
+		Short:   "Contains all commands related to thoughtsync configuration",
 		Aliases: []string{"c"},
+		Args:    cobra.ExactArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			getConfig()
 		},
