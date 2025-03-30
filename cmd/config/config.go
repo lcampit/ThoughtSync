@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 
 	gopath "path"
@@ -28,9 +29,9 @@ const (
 	CONFIG_DIR  = "thoughtsync"
 
 	// Keys in the config file with default values
-	// Vault path
+	// Vault path default value will be defined using env vars
 	VAULT_KEY                     = "vault.path"
-	DEFAULT_VAULT_PATH            = "$HOME/thoughtsync-vault"
+	DEFAULT_VAULT_NAME            = "vault"
 	VAULT_NOTES_EXTENSION_KEY     = "vault.extension"
 	DEFAULT_VAULT_NOTES_EXTENSION = ".md"
 
@@ -58,6 +59,8 @@ const (
 	INBOX_NOTE_KEY     = "vault.inbox"
 	DEFAULT_INBOX_NOTE = "inbox"
 )
+
+var DEFAULT_VAULT_PATH = fmt.Sprintf("%s/%s", os.Getenv("HOME"), DEFAULT_VAULT_NAME)
 
 // InitConfig Loads in ThoughtSync config
 // and sets up default values
